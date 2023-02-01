@@ -12,9 +12,9 @@ def function():
 
     global df2, matches, matches2, rf, df, matches_future, dates
     print("Joining small dataframes into larger one.")
-    randomsize = 200
+    randomsize = 200 * 2
     randomsize = int(randomsize + 1)
-    datasize = int(500)
+    datasize = int(500 * 2)
     trainsize = int((((randomsize+datasize)-1)/4)*3)
     testsize = int((((randomsize+datasize)-1)/4))
     dates = []
@@ -148,8 +148,8 @@ def function():
 
     try:
         print("Machine learning begins.")
-        #rf = RandomForestClassifier(n_estimators=500, min_samples_split=7, random_state=1)
-        rf = RandomForestClassifier(n_estimators=500, min_samples_split=7, max_depth = 4, max_features = 3, bootstrap = True, random_state = 18)
+        rf = RandomForestClassifier(n_estimators=500, min_samples_split=7, random_state=1)
+        #rf = RandomForestClassifier(n_estimators=500, min_samples_split=7, max_depth = 4, max_features = 3, bootstrap = True, random_state = 18)
         #clf = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes = (5, 2), random_state = 1)
         train = matches.head(trainsize) #matches[matches["date"] < '2022-01-01']
         test = matches.tail(testsize) #matches[matches["date"] > '2022-01-01']

@@ -35,6 +35,8 @@ def function():
         print(e)
     print("Moving files to matches folder is finished.")
 
+    c = 0
+
     for i in range(randomsize):
         rand_idx = random.randrange(len(os.listdir(path)))
         filename = os.listdir(path)[rand_idx]
@@ -42,18 +44,24 @@ def function():
             try:
                 tmp = pd.read_csv(f)
                 joined = pd.concat([joined,tmp])
-                print("Success: " + filename)
+                c+=1
+                print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
+
+    c = 0
 
     for filename in os.listdir(path)[-datasize:]:
         with open(os.path.join(path, filename), 'r', encoding="utf8") as f:
             try:
                 tmp = pd.read_csv(f)
                 joined = pd.concat([joined,tmp])
-                print("Success: " + filename)
+                c += 1
+                print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
+
+    c = 0
 
     print("Joining small future dataframes into a large one begins.")
     for filename in os.listdir(future_path):
@@ -64,7 +72,8 @@ def function():
                 match_str = re.search(r'\d{4}-\d{2}-\d{2}', filename)
                 res = datetime.datetime.strptime(match_str.group(), '%Y-%m-%d').date()
                 dates.append(res)
-                print("Success: " + filename)
+                c += 1
+                print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
 
@@ -97,6 +106,23 @@ def function():
         matches["day_code"] = matches["date"].dt.dayofweek
         matches["target"] = result
         matches["winning"] = matches["props_pageProps_match_matchInfo_games_0_snapshotPlayerStats_0_winningTeam"]
+        print("Matches before clean: " + str(matches.shape[0]))
+        matches_tmp = matches.dropna(axis=0, subset=["team1_winprob"])
+        print("Matches TMP after 1st drop: " + str(matches_tmp.shape[0]))
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["team2_winprob"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["team1_power"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["team2_power"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["tournament"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["team"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["opp_code"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["year"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["month"])
+        matches_tmp = matches_tmp.dropna(axis=0, subset=["day_code"])
+        print("Matches TMP after last drop: " + str(matches_tmp.shape[0]))
+        matches = matches_tmp
+        matches = matches[matches.winning != 0]
+        matches = matches[matches.winning != float("nan")]
+        print("Matches after clean: " + str(matches_tmp.shape[0]))
         print("Extended data is ready, Transformation finished.")
     except Exception as e:
         print(e)

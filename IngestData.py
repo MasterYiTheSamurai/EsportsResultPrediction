@@ -99,6 +99,9 @@ def function():
             tmp = pd.json_normalize(flattened)
             if not os.path.isfile(os.getcwd() + "/new_matches/match" + str(latest_date) + team + ".csv"):
                 tmp.to_csv(os.getcwd() + "/new_matches/match" + str(latest_date) + team + ".csv")
+                oldestmatch = (os.listdir(os.getcwd() + "/matches/"))[0]
+                os.remove(os.getcwd() + "/matches/" + oldestmatch)
+                print("Success removing: " + oldestmatch)
         past = latest_date
         latest_date = latest_date + DT.timedelta(days=1)
         mainline = mainline.replace(str(past), str(latest_date))

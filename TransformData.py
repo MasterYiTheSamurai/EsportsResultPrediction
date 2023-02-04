@@ -8,8 +8,8 @@ import re
 import numpy as np
 from sklearn.neural_network import MLPClassifier
 
-def function():
 
+def function():
     global df2, matches, matches2, rf, df, matches_future, dates
     print("Joining small dataframes into larger one.")
     randomsize = 200 * 2
@@ -22,7 +22,6 @@ def function():
     future = pd.DataFrame()
     path = os.getcwd() + "/matches/"
     future_path = os.getcwd() + "/future/"
-
     source = os.getcwd() + "/new_matches/"
     allfiles = os.listdir(source)
     destination = os.getcwd() + "/matches/"
@@ -34,11 +33,9 @@ def function():
     except Exception as e:
         print(e)
     print("Moving files to matches folder is finished.")
-
     c = 0
-
     for i in range(randomsize):
-        rand_idx = random.randrange(len(os.listdir(path)))
+        rand_idx = random.randrange((len(os.listdir(path))-datasize-1))
         filename = os.listdir(path)[rand_idx]
         with open(os.path.join(path, filename), 'r', encoding="utf8") as f:
             try:
@@ -48,9 +45,7 @@ def function():
                 print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
-
     c = 0
-
     for filename in os.listdir(path)[-datasize:]:
         with open(os.path.join(path, filename), 'r', encoding="utf8") as f:
             try:
@@ -60,9 +55,7 @@ def function():
                 print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
-
     c = 0
-
     print("Joining small future dataframes into a large one begins.")
     for filename in os.listdir(future_path):
         with open(os.path.join(future_path, filename), 'r', encoding="utf8") as f:
@@ -76,9 +69,7 @@ def function():
                 print("Success: " + filename + " c: " + str(c))
             except Exception as e:
                 print(e)
-
     print("Joining small future dataframes into a large one finished.")
-
     try:
         matches = joined
         team1winprob = matches["props_pageProps_match_matchInfo_prematchWinProbability_team1Winprob"].tolist()
@@ -106,9 +97,7 @@ def function():
         matches["day_code"] = matches["date"].dt.dayofweek
         matches["target"] = result
         matches["winning"] = matches["props_pageProps_match_matchInfo_games_0_snapshotPlayerStats_0_winningTeam"]
-        print("Matches before clean: " + str(matches.shape[0]))
         matches_tmp = matches.dropna(axis=0, subset=["team1_winprob"])
-        print("Matches TMP after 1st drop: " + str(matches_tmp.shape[0]))
         matches_tmp = matches_tmp.dropna(axis=0, subset=["team2_winprob"])
         matches_tmp = matches_tmp.dropna(axis=0, subset=["team1_power"])
         matches_tmp = matches_tmp.dropna(axis=0, subset=["team2_power"])
@@ -118,15 +107,14 @@ def function():
         matches_tmp = matches_tmp.dropna(axis=0, subset=["year"])
         matches_tmp = matches_tmp.dropna(axis=0, subset=["month"])
         matches_tmp = matches_tmp.dropna(axis=0, subset=["day_code"])
-        print("Matches TMP after last drop: " + str(matches_tmp.shape[0]))
         matches = matches_tmp
         matches = matches[matches.winning != 0]
         matches = matches[matches.winning != float("nan")]
-        print("Matches after clean: " + str(matches_tmp.shape[0]))
+        matches = matches[matches.team != -1.0]
+        matches = matches[matches.team != float("nan")]
         print("Extended data is ready, Transformation finished.")
     except Exception as e:
         print(e)
-
     print("Machine Learning file begins.")
     global predictors, preds, test, matches_future
     try:
@@ -171,7 +159,6 @@ def function():
         print("Values for file writing  are created.")
     except Exception as e:
         print(e)
-
     try:
         print("Machine learning begins.")
         rf = RandomForestClassifier(n_estimators=500, min_samples_split=7, random_state=1)
@@ -239,5 +226,6 @@ def function():
         print("Printing is done, ML is finished.")
     except Exception as e:
         print(e)
+
 
 function()

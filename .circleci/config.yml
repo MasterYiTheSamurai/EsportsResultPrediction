@@ -30,7 +30,7 @@ jobs:
       - image: cimg/python:3.10.5
     steps:
       - checkout
-       - python/install-packages:
+      - python/install-packages:
           pkg-manager: pip
       - run:
           name: Run IngestThenExtractData.py

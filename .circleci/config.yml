@@ -35,7 +35,7 @@ jobs:
             git config user.name "CircleCI Job"
             git checkout main
             git add .
-            git commit -m "Automatic commit from CircleCI [skip ci]"
+            git commit --allow-empty -m "Automatic commit from CircleCI [skip ci]"
             git push origin main
   Data Ingestion and Extraction:
     docker:
@@ -60,5 +60,5 @@ jobs:
             git config user.name "CircleCI Job"
             git checkout main
             git add .
-            git commit -m "Automatic commit from CircleCI [skip ci]"
+            git commit --allow-empty -m "Automatic commit from CircleCI [skip ci]"
             git push origin main

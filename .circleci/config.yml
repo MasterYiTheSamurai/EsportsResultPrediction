@@ -44,8 +44,7 @@ jobs:
           fingerprints:
             - "dd:72:bb:51:fd:66:b8:15:14:cd:27:21:36:a3:4b:a5"
       - checkout
-      - run: git submodule sync
-      - run: git submodule update --init
+      - run: git pull
       - python/install-packages:
             pkg-manager: pip
       - browser-tools/install-chrome

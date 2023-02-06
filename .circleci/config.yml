@@ -15,6 +15,9 @@ workflows:
       - Data Ingestion and Extraction:
             requires:
                 - Prepare environment to Data Ingestion and Extraction
+       - Data Load and Transform:
+            requires:
+                - Data Ingestion and Extraction
 
 jobs:
   Prepare environment to Data Ingestion and Extraction:
@@ -62,3 +65,26 @@ jobs:
             git add .
             git commit --allow-empty -m "Automatic commit from CircleCI [skip ci]"
             git push origin main
+  Data Load and Transform:
+    docker:
+      - image: cimg/python:3.10.5
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "dd:72:bb:51:fd:66:b8:15:14:cd:27:21:36:a3:4b:a5"
+      - checkout
+      - run: git pull
+      - python/install-packages:
+            pkg-manager: pip
+      - run:
+          name: Run LoadThenTransformData.py
+          command: python LoadThenTransformData.py
+      - run:
+          name: Push changes to GitHub
+          command: |
+            git config user.email "blasko.gergo.hungmail.com"
+            git config user.name "CircleCI Job"
+            git checkout main
+            git add .
+            git commit --allow-empty -m "Automatic commit from CircleCI [skip ci]"
+            git push origin main 

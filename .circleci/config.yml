@@ -11,15 +11,24 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
-      - prepare
+      - Prepare environment to Data Ingestion and Extraction
+      - Data Ingestion and Extraction
 
 jobs:
-  prepare:
+  Prepare environment to Data Ingestion and Extraction:
     docker:
       - image: cimg/python:3.10.5
     steps:
       - checkout
       - run:
           name: Run Prepare.py
-          # This assumes pytest is installed via the install-package step above
           command: python Prepare.py
+  Data Ingestion and Extraction:
+    docker:
+      - image: cimg/python:3.10.5
+    steps:
+      - checkout
+      - run:
+          name: Run IngestThenExtractData.py
+          command: python IngestThenExtractData.py
+          

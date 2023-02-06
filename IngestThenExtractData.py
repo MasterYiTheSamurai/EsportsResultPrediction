@@ -16,7 +16,6 @@ options = webdriver.ChromeOptions()
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--incognito')
 options.add_argument('--headless')
-
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 
@@ -44,7 +43,6 @@ def function():
     raw = os.listdir(path)[-1]
     regex_date = re.search(r'\d{4}-\d{2}-\d{2}', raw)
     latest_date = datetime.strptime(regex_date.group(), '%Y-%m-%d').date()
-
     print("Get the match data from factor.gg")
     matches = []
     today = DT.date.today()
@@ -105,12 +103,10 @@ def function():
         past = latest_date
         latest_date = latest_date + DT.timedelta(days=1)
         mainline = mainline.replace(str(past), str(latest_date))
-
     today = DT.date.today()
     today = today + DT.timedelta(days=1)
     mainline = "https://www.factor.gg/schedule?region=all&date="
     mainline += str(today)
-
     future = today + DT.timedelta(days=6)
     future = str(future)
     print("Get the future match data from factor.gg")
@@ -135,7 +131,6 @@ def function():
         distinct_match_urls = list(dict.fromkeys(match_urls))
         matches.append(distinct_match_urls)
         print(distinct_match_urls)
-
         for url in distinct_match_urls:
             team = url.split("/")[-1]
             url = url + "/1/statistics"
@@ -148,7 +143,6 @@ def function():
                 continue
             driver.find_element(By.ID, '__NEXT_DATA__')
             html = driver.page_source
-
             soup = BeautifulSoup(html, 'lxml')
             data = soup.find("script", {"id": "__NEXT_DATA__"})
             data = data.text

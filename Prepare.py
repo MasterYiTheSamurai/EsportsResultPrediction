@@ -7,6 +7,8 @@ def function():
     try:
         folder = os.getcwd() + "/future/"
     except Exception as e:
+        print(e)
+    finally:
         os.mkdir(os.getcwd() + "/future/")
     folder = os.getcwd() + "/future/"
     for filename in os.listdir(folder):

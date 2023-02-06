@@ -40,10 +40,10 @@ jobs:
     docker:
       - image: cimg/python:3.10.5
     steps:
-       - run:
+      - run:
           name: Pull changes from GitHub
           command: |
-            git config user.email "blasko.gergo.hungmail.com"
+            git config user.email "blasko.gergo.hun@gmail.com"
             git config user.name "CircleCI Job"
             git pull main
       - python/install-packages:

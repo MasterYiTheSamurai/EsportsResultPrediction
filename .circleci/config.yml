@@ -22,9 +22,20 @@ jobs:
       - image: cimg/python:3.10.5
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "dd:72:bb:51:fd:66:b8:15:14:cd:27:21:36:a3:4b:a5"
       - run:
           name: Run Prepare.py
           command: python Prepare.py
+      - run:
+          name: Push changes to GitHub
+          command: |
+            git config user.email "blasko.gergo.hungmail.com"
+            git config user.name "CircleCI Job"
+            git checkout master
+            git commit --allow-empty -am "Automatic commit from CircleCI [skip ci]"
+            git push origin master
   Data Ingestion and Extraction:
     docker:
       - image: cimg/python:3.10.5

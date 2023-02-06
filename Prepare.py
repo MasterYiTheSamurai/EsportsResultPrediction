@@ -6,7 +6,7 @@ def function():
     print("Removing contents of future folder.")
     try:
         folder = os.getcwd() + "/future/"
-    except:
+    except Exception as e:
         os.mkdir(os.getcwd() + "/future/")
     for filename in os.listdir(folder):
         try:

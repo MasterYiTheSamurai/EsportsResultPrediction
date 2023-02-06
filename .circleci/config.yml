@@ -15,7 +15,7 @@ workflows:
       - Data Ingestion and Extraction:
             requires:
                 - Prepare environment to Data Ingestion and Extraction
-       - Data Load and Transform:
+      - Data Load and Transform:
             requires:
                 - Data Ingestion and Extraction
 
@@ -87,4 +87,16 @@ jobs:
             git checkout main
             git add .
             git commit --allow-empty -m "Automatic commit from CircleCI [skip ci]"
-            git push origin main 
+            git push origin main
+  SendEmail:
+    docker:
+      - image: cimg/python:3.10.5
+    steps:
+      - checkout
+      - run: git pull
+      - python/install-packages:
+            pkg-manager: pip
+      - run:
+          name: Run SendEmail.py
+          command: python SendEmail.py naiufczzqzxeohci       
+            

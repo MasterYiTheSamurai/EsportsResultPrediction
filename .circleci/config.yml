@@ -13,6 +13,8 @@ workflows:
     jobs:
       - Prepare environment to Data Ingestion and Extraction
       - Data Ingestion and Extraction
+        requires:
+          - Prepare environment to Data Ingestion and Extraction
 
 jobs:
   Prepare environment to Data Ingestion and Extraction:
@@ -28,6 +30,8 @@ jobs:
       - image: cimg/python:3.10.5
     steps:
       - checkout
+       - python/install-packages:
+          pkg-manager: pip
       - run:
           name: Run IngestThenExtractData.py
           command: python IngestThenExtractData.py

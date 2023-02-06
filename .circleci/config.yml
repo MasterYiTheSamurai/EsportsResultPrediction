@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: cimg/python:3.8.4
     steps:
       - checkout
       - run: echo "A first hello"

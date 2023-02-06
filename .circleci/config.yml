@@ -18,6 +18,9 @@ workflows:
       - Data Load and Transform:
             requires:
                 - Data Ingestion and Extraction
+      - SendEmail:
+            requires:
+                - Data Load and Transform          
 
 jobs:
   Prepare environment to Data Ingestion and Extraction:

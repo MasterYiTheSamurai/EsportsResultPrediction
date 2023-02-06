@@ -48,4 +48,11 @@ jobs:
       - run:
           name: Run IngestThenExtractData.py
           command: python IngestThenExtractData.py
-          
+      - run:
+          name: Push changes to GitHub
+          command: |
+            git config user.email "blasko.gergo.hungmail.com"
+            git config user.name "CircleCI Job"
+            git checkout main
+            git commit --allow-empty -am "Automatic commit from CircleCI [skip ci]"
+            git push origin main

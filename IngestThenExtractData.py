@@ -40,6 +40,7 @@ def flatten_json(y):
 
 def function():
     path = os.getcwd() + "/matches/"
+    futurefolder = os.getcwd() + "/future/"
     raw = os.listdir(path)[-1]
     regex_date = re.search(r'\d{4}-\d{2}-\d{2}', raw)
     latest_date = datetime.strptime(regex_date.group(), '%Y-%m-%d').date()
@@ -110,6 +111,8 @@ def function():
     future = today + DT.timedelta(days=6)
     future = str(future)
     print("Get the future match data from factor.gg")
+    if not os.path.exists(futurefolder):
+        os.makedirs(futurefolder)
     while str(today) < future:
         driver.get(mainline)
         try:

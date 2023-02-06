@@ -23,6 +23,8 @@ def function():
     path = os.getcwd() + "/matches/"
     future_path = os.getcwd() + "/future/"
     source = os.getcwd() + "/new_matches/"
+    if not os.path.exists(source):
+        os.makedirs(source)
     allfiles = os.listdir(source)
     destination = os.getcwd() + "/matches/"
     try:

@@ -8,6 +8,7 @@ def function():
         folder = os.getcwd() + "/future/"
     except Exception as e:
         os.mkdir(os.getcwd() + "/future/")
+    folder = os.getcwd() + "/future/"
     for filename in os.listdir(folder):
         try:
             os.remove(folder + filename)

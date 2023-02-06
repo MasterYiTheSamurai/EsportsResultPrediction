@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - python/install-packages:
-          pkg-manager: pip
+            pkg-manager: pip
       - run:
           name: Run IngestThenExtractData.py
           command: python IngestThenExtractData.py

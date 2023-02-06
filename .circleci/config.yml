@@ -40,6 +40,9 @@ jobs:
     docker:
       - image: cimg/python:3.10.5
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "dd:72:bb:51:fd:66:b8:15:14:cd:27:21:36:a3:4b:a5"
       - run:
           name: Pull changes from GitHub
           command: |

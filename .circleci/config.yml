@@ -104,5 +104,5 @@ jobs:
             pkg-manager: pip
       - run:
           name: Run SendEmail.py
-          command: python SendEmail.py naiufczzqzxeohci       
+          command: python SendEmail.py $GmailAccessKey       
             

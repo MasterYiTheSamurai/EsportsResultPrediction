@@ -78,8 +78,9 @@ def function():
         for url in distinct_match_urls:
             team = url.split("/")[-1]
             url = url + "/1/statistics"
-            driver.get(url)
+           
             try:
+                driver.get(url)
                 WebDriverWait(driver, 50).until(EC.presence_of_element_located(
                     (By.ID, '__NEXT_DATA__')))
             except Exception as e:
@@ -140,8 +141,9 @@ def function():
         for url in distinct_match_urls:
             team = url.split("/")[-1]
             url = url + "/1/statistics"
-            driver.get(url)
+            
             try:
+                driver.get(url)
                 WebDriverWait(driver, 50).until(EC.presence_of_element_located(
                     (By.ID, '__NEXT_DATA__')))
             except Exception as e:
